@@ -1,0 +1,12 @@
+<!-- src/test/resources/testng.xml -->
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Solidgate API and UI Test Suite" verbose="1" parallel="false">
+    <test name="Solidgate Payment Flow Tests">
+        <classes>
+            <!-- UI test that creates an order and performs payment -->
+            <class name="ui.SolidgatePaymentTest"/>
+            <!-- API test that verifies the order status created by the UI test -->
+            <class name="api.SolidgateApiTest"/>
+        </classes>
+    </test>
+</suite>

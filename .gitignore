@@ -1,0 +1,36 @@
+# Compiled class files
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+*.log
+logs/
+target/
+
+# IDE files (IntelliJ IDEA)
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+
+target/
+
+# Test properties (contains sensitive information)
+# It's crucial not to commit this file with real keys
+src/test/resources/test.properties
+
+# Dependency directories
+# May vary depending on how you manage dependencies (e.g., vendor/node_modules)
+# Not typically needed for Maven, but good to know
+vendor/
+node_modules/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+.localized
