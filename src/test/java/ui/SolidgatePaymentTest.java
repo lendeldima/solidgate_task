@@ -25,8 +25,9 @@ public class SolidgatePaymentTest extends BaseTest {
     @Test(description = "Verifies displayed price, currency, and performs payment via UI.")
     public void testFullPaymentFlowUI() {
 
-        solidgatePaymentPage.verifyDisplayedPrice(currentOrderAmount);
-        solidgatePaymentPage.verifyDisplayedCurrency(currentOrderCurrency);
+        solidgatePaymentPage.verifyHeaderDisplayedPrice(currentOrderAmount);
+        solidgatePaymentPage.verifyHeaderDisplayedCurrency(currentOrderCurrency);
+        solidgatePaymentPage.verifySubmitButtonPriceAndCurrencyText(currentOrderAmount, currentOrderCurrency);
         solidgatePaymentPage.enterCardDetails(TestData.TEST_CARD_NUMBER, TestData.TEST_EXPIRY_DATE, TestData.TEST_CVV, TestData.TEST_EMAIL);
         solidgatePaymentPage.clickSubmitPayment();
         solidgatePaymentPage.verifyPaymentSuccess("Оплата пройшла успішно!");

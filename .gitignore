@@ -24,11 +24,6 @@ build/
 # It's crucial not to commit this file with real keys
 src/test/resources/test.properties
 
-# Dependency directories
-# May vary depending on how you manage dependencies (e.g., vendor/node_modules)
-# Not typically needed for Maven, but good to know
-vendor/
-node_modules/
 
 # Operating System files
 .DS_Store

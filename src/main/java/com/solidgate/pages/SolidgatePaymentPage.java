@@ -8,6 +8,8 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.$;
 
@@ -62,7 +64,7 @@ public class SolidgatePaymentPage {
      *
      * @param expectedAmountMinorUnits The expected amount in minor units (e.g., 1000 for $10.00).
      */
-    public void verifyDisplayedPrice(int expectedAmountMinorUnits) {
+    public void verifyHeaderDisplayedPrice(int expectedAmountMinorUnits) {
 
         priceMajorElement.shouldBe(Condition.visible);
 
@@ -112,7 +114,7 @@ public class SolidgatePaymentPage {
      *
      * @param expectedCurrency The expected currency code (e.g., "USD").
      */
-    public void verifyDisplayedCurrency(String expectedCurrency) {
+    public void verifyHeaderDisplayedCurrency(String expectedCurrency) {
 
         priceMajorElement.shouldBe(Condition.visible);
 
@@ -135,5 +137,46 @@ public class SolidgatePaymentPage {
 
         Assert.assertEquals(actualCurrency, expectedCurrency, "Currency on the page does not match the expected.");
 
+    }
+
+    public void verifySubmitButtonPriceAndCurrencyText(int expectedAmountMinorUnits, String expectedCurrency) {
+        System.out.println("Verifying submit button text for price and currency (flexible prefix)...");
+        submitPaymentButton.shouldBe(Condition.visible); // Ensure the button is visible
+
+        String buttonText = submitPaymentButton.text();
+        System.out.println("Actual submit button text: '" + buttonText + "'");
+
+        // Updated Pattern: (.*?) captures any text non-greedily before the amount and currency
+        Pattern pattern = Pattern.compile("(.*?) (\\d+[.,]\\d{2}) (\\w{3})");
+        Matcher matcher = pattern.matcher(buttonText);
+
+        if (matcher.find()) {
+            String prefixWord = matcher.group(1).trim(); // The word before the amount and currency
+            String amountString = matcher.group(2);
+            String actualCurrency = matcher.group(3);
+
+            System.out.println("Prefix word/phrase found: '" + prefixWord + "'");
+
+
+            // Using Locale.getDefault() which should be en-IT with comma as decimal separator
+            DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+            symbols.setDecimalSeparator(',');
+            DecimalFormat format = new DecimalFormat("0.00", symbols);
+
+            try {
+                Number number = format.parse(amountString);
+                double actualAmountMajorUnits = number.doubleValue();
+                int actualAmountMinorUnits = (int) (Math.round(actualAmountMajorUnits * 100.0));
+
+                Assert.assertEquals(actualAmountMinorUnits, expectedAmountMinorUnits, "Amount in submit button text does not match expected (in minor units).");
+                Assert.assertEquals(actualCurrency, expectedCurrency, "Currency in submit button text does not match expected.");
+                System.out.printf("Submit button text verified: Prefix '%s', Amount %s (minor units %d), Currency %s%n", prefixWord, amountString, actualAmountMinorUnits, actualCurrency);
+
+            } catch (ParseException e) {
+                Assert.fail("Failed to parse amount from submit button text '" + amountString + "': " + e.getMessage());
+            }
+        } else {
+            Assert.fail("Submit button text format unexpected: '" + buttonText + "'. Expected 'ANY_WORD XX,YY CUR'.");
+        }
     }
 }
