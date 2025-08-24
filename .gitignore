@@ -19,7 +19,7 @@ out/
 
 
 target/
-
+build/
 # Test properties (contains sensitive information)
 # It's crucial not to commit this file with real keys
 src/test/resources/test.properties
