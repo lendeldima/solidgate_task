@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 public class SolidgateApiTest extends BaseTest {
 
-    @Test(description = "Verifies order and transaction status via API after successful UI payment.", dependsOnMethods = {"ui.SolidgatePaymentTest.testFullPaymentFlowUI"}) // Dependency updated
+    @Test(description = "Verifies order and transaction status via API after successful UI payment.", dependsOnMethods = {"ui.SolidgatePaymentTest.testFullPaymentFlowUI"})
     public void testOrderStatusAfterPayment() {
 
         SolidgateApiActions.checkOrderStatus(currentOrderId, currentOrderAmount, currentOrderCurrency);

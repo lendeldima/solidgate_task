@@ -15,11 +15,12 @@ public class SolidgatePaymentTest extends BaseTest {
     private String paymentPageRedirectUrl;
     private SolidgatePaymentPage solidgatePaymentPage;
 
-    @BeforeMethod(alwaysRun = true) // Ensures this runs before each test in this class
+    @BeforeMethod(alwaysRun = true)
+
     public void setupPaymentPage() {
         solidgatePaymentPage = new SolidgatePaymentPage();
         paymentPageRedirectUrl = PaymentPageInitializer.createPaymentPageAndGetUrl();
-        open(paymentPageRedirectUrl); // Open the payment page URL
+        open(paymentPageRedirectUrl);
     }
 
     @Test(description = "Verifies displayed price, currency, and performs payment via UI.")
