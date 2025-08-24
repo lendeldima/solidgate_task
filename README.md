@@ -4,7 +4,7 @@ This project contains automated UI and API tests for the Solidgate payment syste
 
 ## ✨ Technologies Used
 
-* **Java 11+**: Primary programming language.
+* **Java 17+**: Primary programming language.
 * **Maven**: Build automation and project management.
 * **Selenide**: UI test automation framework.
 * **REST Assured**: API testing library.
