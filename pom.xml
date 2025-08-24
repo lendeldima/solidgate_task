@@ -42,8 +42,6 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- Додано для Hashing (Guava) для HMAC-SHA512 -->
-
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -69,7 +67,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M7</version>
                 <configuration>
-                    <!-- Вказуємо TestNG XML-файл для запуску тестів -->
                     <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>

@@ -36,9 +36,9 @@ public class SolidgatePaymentPage {
     public void enterCardDetails(String cardNumber, String expiryDate, String cvv, String exampleEmail) {
 
         cardNumberField.shouldBe(Condition.visible).setValue(cardNumber);
-        expiryDateField.setValue(expiryDate);
-        emailField.setValue(exampleEmail);
-        cvvField.setValue(cvv);
+        expiryDateField.shouldBe(Condition.visible).setValue(expiryDate);
+        emailField.shouldBe(Condition.visible).setValue(exampleEmail);
+        cvvField.shouldBe(Condition.visible).setValue(cvv);
 
     }
 
@@ -140,11 +140,10 @@ public class SolidgatePaymentPage {
     }
 
     public void verifySubmitButtonPriceAndCurrencyText(int expectedAmountMinorUnits, String expectedCurrency) {
-        System.out.println("Verifying submit button text for price and currency (flexible prefix)...");
+
         submitPaymentButton.shouldBe(Condition.visible); // Ensure the button is visible
 
         String buttonText = submitPaymentButton.text();
-        System.out.println("Actual submit button text: '" + buttonText + "'");
 
         // Updated Pattern: (.*?) captures any text non-greedily before the amount and currency
         Pattern pattern = Pattern.compile("(.*?) (\\d+[.,]\\d{2}) (\\w{3})");
@@ -154,9 +153,6 @@ public class SolidgatePaymentPage {
             String prefixWord = matcher.group(1).trim(); // The word before the amount and currency
             String amountString = matcher.group(2);
             String actualCurrency = matcher.group(3);
-
-            System.out.println("Prefix word/phrase found: '" + prefixWord + "'");
-
 
             // Using Locale.getDefault() which should be en-IT with comma as decimal separator
             DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
@@ -170,7 +166,6 @@ public class SolidgatePaymentPage {
 
                 Assert.assertEquals(actualAmountMinorUnits, expectedAmountMinorUnits, "Amount in submit button text does not match expected (in minor units).");
                 Assert.assertEquals(actualCurrency, expectedCurrency, "Currency in submit button text does not match expected.");
-                System.out.printf("Submit button text verified: Prefix '%s', Amount %s (minor units %d), Currency %s%n", prefixWord, amountString, actualAmountMinorUnits, actualCurrency);
 
             } catch (ParseException e) {
                 Assert.fail("Failed to parse amount from submit button text '" + amountString + "': " + e.getMessage());
